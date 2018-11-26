@@ -1,0 +1,94 @@
+<html>
+<head>
+<style type="text/css">
+.button {
+    background-color: #7db9e8;
+    background: -webkit-linear-gradient(#7db9e8, #51A1E0);
+    background: linear-gradient(#7db9e8, #51A1E0);
+    border: solid 1px #1E5799;
+    border-radius: 3px;
+    box-sizing: border-box;
+    box-shadow: inset 0 0 1px #fff;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font: bold 14px/32px'Open Sans', sans-serif;
+    height: 34px;
+    outline: none;
+    padding: 0 25px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 1px #1E5799;
+}
+
+
+</style>
+</head>
+
+
+<body>
+<div class="container">
+<span>Token  " {{token}} " has been assign sucessfully</span><br><br>
+<span>Please Press the button claim token to keep your token alive within 60 seconds</span><br><br>
+<h1><time>00:00:00</time></h1>
+  <form action="/token/claim/" method="post">
+           <a href=""><button class="button" id="yourButton" type="submit">Claim Token</button></a>
+              {% csrf_token %}
+            <input type="hidden" name="id" value="{{id}}">
+            </form>
+
+<a href="/token/generate/"><button class="button">Generate Another token</button></a>
+<a href="/token/alltokens/"><button class="button">See all tokens</button></a>
+<a href="/token/home/"><button class="button">Home</button></a>
+<a href="/token/assigntoken/"><button class="button">Assign Token</button></a>
+
+</div>
+<script type="text/javascript">
+    var h1 = document.getElementsByTagName('h1')[0],
+   
+    stop = document.getElementById('stop'),
+    
+    seconds = 0, minutes = 0, hours = 0,
+    t;
+
+function add() {
+    seconds++;
+    if (seconds >= 60) {
+        seconds = 0;
+        minutes++;
+        if (minutes >= 60) {
+            minutes = 0;
+            hours++;
+        }
+    }
+    
+    h1.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+
+    timer();
+}
+function timer() {
+    t = setTimeout(add, 1000);
+}
+timer();
+
+
+
+
+/* Stop button */
+stop.onclick = function() {
+    clearTimeout(t);
+}
+
+
+window.onload = function() {
+    window.setTimeout(setDisabled, 300);
+}
+
+function setDisabled() {
+    document.getElementById('yourButton').disabled = false;
+}
+
+
+</script>
+</body>

@@ -1,0 +1,78 @@
+<html>
+<head>
+<style type="text/css">
+    .zui-table {
+    border: solid 1px #DDEEEE;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font: normal 13px Arial, sans-serif;
+}
+.zui-table thead th {
+    background-color: #DDEFEF;
+    border: solid 1px #DDEEEE;
+    color: #336B6B;
+    padding: 10px;
+    text-align: left;
+    text-shadow: 1px 1px 1px #fff;
+}
+.zui-table tbody td {
+    border: solid 1px #DDEEEE;
+    color: #333;
+    padding: 10px;
+    text-shadow: 1px 1px 1px #fff;
+}
+</style>
+</head>
+<body>
+
+
+
+<table class="zui-table">
+    <thead>
+        <tr>
+        <th>Id</th>
+            <th>Token</th>
+            <th>Status</th>
+            <th>Free</th>
+            <th>Delete</th>
+            <th>Unblock</th>
+             <th>Make Alive</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for ele in alltoken %}
+        <tr>
+            <td>{{ele.id}}</td>
+            <td>{{ele.token}}</td>
+            {% if ele.alive == 1 %}
+            <td>Dead</td>
+            {% else %}
+            <td>Alive</td>
+            {% endif %}
+            <td>{{ele.flag}}</td>
+            <form action="/token/delete/" method="post">
+            <td><button type="submit">Delete</button></td>
+          {% csrf_token %}
+            <input type="hidden" name="id" value="{{ele.id}}">
+            </form>
+           <form action="/token/unblock/" method="post">
+            <td><button type="submit">Unblock</button></td>
+              {% csrf_token %}
+            <input type="hidden" name="id" value="{{ele.id}}">
+            </form>
+
+              <form action="/token/alive/" method="post">
+            <td><button type="submit">Alive</button></td>
+              {% csrf_token %}
+            <input type="hidden" name="id" value="{{ele.id}}">
+            </form>
+    
+        </tr>
+
+        {% endfor  %}
+       
+    </tbody>
+</table>
+<a style="position: absolute; top: 10px; right: 10px;" href="/token/home/"><button class="button">Home</button></a>
+</body>
+</html>
